@@ -1,0 +1,11 @@
+{
+  "approvers": [
+    { "approverId": "alice", "name": "Alice Nowak", "limit": 500 },
+    { "approverId": "bharat", "name": "Bharat Rao", "limit": 5000 },
+    { "approverId": "chen", "name": "Chen Wei", "limit": 10000 },
+    { "approverId": "dana", "name": "Dana Okafor", "limit": 5000 },
+    { "approverId": "eshe", "name": "Eshe Mwangi", "limit": 20000 },
+    { "approverId": "farouk", "name": "Farouk Haddad", "limit": 20000 },
+    { "approverId": "gita", "name": "Gita Balan", "limit": 20000 }
+  ]
+}

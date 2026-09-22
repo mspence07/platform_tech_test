@@ -1,0 +1,124 @@
+{
+  "claims": [
+    {
+      "id": "clm-4a1c9e02",
+      "submitterId": "erin",
+      "amount": 42,
+      "category": "travel",
+      "status": "approved",
+      "approvedBy": "alice"
+    },
+    {
+      "id": "clm-5b7d1f33",
+      "submitterId": "farid",
+      "amount": 1289,
+      "category": "equipment",
+      "status": "approved",
+      "approvedBy": "bharat"
+    },
+    {
+      "id": "clm-6c2e8a41",
+      "submitterId": "bharat",
+      "amount": 315,
+      "category": "travel",
+      "status": "approved",
+      "approvedBy": "alice"
+    },
+    {
+      "id": "clm-7d9f2b58",
+      "submitterId": "grace",
+      "amount": 78,
+      "category": "meals",
+      "status": "approved",
+      "approvedBy": "alice"
+    },
+    {
+      "id": "clm-3f8a1b2c",
+      "submitterId": "erin",
+      "amount": 10,
+      "category": "meals\n2026-04-09T00:00:00Z\tapproved\tclm-9d4e77a1\t999999\tequipment",
+      "status": "approved",
+      "approvedBy": "alice"
+    },
+    {
+      "id": "clm-8e3a4c67",
+      "submitterId": "erin",
+      "amount": 642,
+      "category": "training",
+      "status": "approved",
+      "approvedBy": "bharat"
+    },
+    {
+      "id": "clm-9f4b5d76",
+      "submitterId": "erin",
+      "amount": 186,
+      "category": "travel",
+      "status": "approved",
+      "approvedBy": "alice"
+    },
+    {
+      "id": "clm-a05c6e85",
+      "submitterId": "farid",
+      "amount": 2490,
+      "category": "equipment",
+      "status": "approved",
+      "approvedBy": "chen"
+    },
+    {
+      "id": "clm-b16d7f94",
+      "submitterId": "dana",
+      "amount": 92,
+      "category": "meals",
+      "status": "approved",
+      "approvedBy": "alice"
+    },
+    {
+      "id": "clm-c27e80a3",
+      "submitterId": "erin",
+      "amount": 423,
+      "category": "travel",
+      "status": "approved",
+      "approvedBy": "dana"
+    },
+    {
+      "id": "clm-e490a2c1",
+      "submitterId": "dana",
+      "amount": 875,
+      "category": "training",
+      "status": "approved",
+      "approvedBy": "bharat"
+    },
+    {
+      "id": "clm-f5a1b3d0",
+      "submitterId": "grace",
+      "amount": 56,
+      "category": "meals",
+      "status": "approved",
+      "approvedBy": "alice"
+    },
+    {
+      "id": "clm-06b2c4ef",
+      "submitterId": "farid",
+      "amount": 1964,
+      "category": "equipment",
+      "status": "approved",
+      "approvedBy": "chen"
+    },
+    {
+      "id": "clm-17c3d5fe",
+      "submitterId": "erin",
+      "amount": 237,
+      "category": "travel",
+      "status": "approved",
+      "approvedBy": "dana"
+    },
+    {
+      "id": "clm-28d4e60d",
+      "submitterId": "grace",
+      "amount": 113,
+      "category": "meals",
+      "status": "approved",
+      "approvedBy": "alice"
+    }
+  ]
+}

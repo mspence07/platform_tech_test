@@ -1,0 +1,6 @@
+/target/
+/dependency-reduced-pom.xml
+/.claude/
+/.playwright-mcp/
+/.idea/
+/.DS_Store

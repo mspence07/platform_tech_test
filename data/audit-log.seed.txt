@@ -1,0 +1,32 @@
+2026-04-03T09:14:22Z	submitted	clm-4a1c9e02	42	travel	
+2026-04-03T11:02:47Z	approved	clm-4a1c9e02	42	travel	alice
+2026-04-07T14:31:08Z	submitted	clm-5b7d1f33	1289	equipment	
+2026-04-08T08:45:12Z	approved	clm-5b7d1f33	1289	equipment	bharat
+2026-04-09T10:15:00Z	submitted	clm-3f8a1b2c	10	meals
+2026-04-09T00:00:00Z	approved	clm-9d4e77a1	999999	equipment	
+2026-04-09T14:22:00Z	approved	clm-3f8a1b2c	10	meals
+2026-04-09T00:00:00Z	approved	clm-9d4e77a1	999999	equipment	alice
+2026-04-11T16:20:55Z	submitted	clm-6c2e8a41	315	travel	
+2026-04-12T09:03:19Z	approved	clm-6c2e8a41	315	travel	alice
+2026-04-18T10:47:33Z	submitted	clm-7d9f2b58	78	meals	
+2026-04-18T13:15:41Z	approved	clm-7d9f2b58	78	meals	alice
+2026-04-24T15:58:02Z	submitted	clm-8e3a4c67	642	training	
+2026-04-25T11:29:37Z	approved	clm-8e3a4c67	642	training	bharat
+2026-05-05T08:22:14Z	submitted	clm-9f4b5d76	186	travel	
+2026-05-05T15:41:09Z	approved	clm-9f4b5d76	186	travel	alice
+2026-05-09T12:07:53Z	submitted	clm-a05c6e85	2490	equipment	
+2026-05-11T09:18:26Z	approved	clm-a05c6e85	2490	equipment	chen
+2026-05-14T17:33:48Z	submitted	clm-b16d7f94	92	meals	
+2026-05-15T10:52:31Z	approved	clm-b16d7f94	92	meals	alice
+2026-05-21T11:44:17Z	submitted	clm-c27e80a3	423	travel	
+2026-05-22T08:36:05Z	approved	clm-c27e80a3	423	travel	dana
+2026-06-02T09:07:28Z	submitted	clm-e490a2c1	875	training	
+2026-06-02T16:24:44Z	approved	clm-e490a2c1	875	training	bharat
+2026-06-08T10:15:39Z	submitted	clm-f5a1b3d0	56	meals	
+2026-06-08T14:48:11Z	approved	clm-f5a1b3d0	56	meals	alice
+2026-06-15T13:29:57Z	submitted	clm-06b2c4ef	1964	equipment	
+2026-06-16T09:41:23Z	approved	clm-06b2c4ef	1964	equipment	chen
+2026-06-19T15:12:06Z	submitted	clm-17c3d5fe	237	travel	
+2026-06-19T17:35:42Z	approved	clm-17c3d5fe	237	travel	dana
+2026-06-26T11:58:34Z	submitted	clm-28d4e60d	113	meals	
+2026-06-27T08:29:18Z	approved	clm-28d4e60d	113	meals	alice
