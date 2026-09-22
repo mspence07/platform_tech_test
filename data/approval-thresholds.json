@@ -1,0 +1,16 @@
+{
+  "approvalThresholds": [
+    {
+      "minimumAmount": 0,
+      "approvalsRequired": 1
+    },
+    {
+      "minimumAmount": 1000,
+      "approvalsRequired": 2
+    },
+    {
+      "minimumAmount": 10000,
+      "approvalsRequired": 3
+    }
+  ]
+}
