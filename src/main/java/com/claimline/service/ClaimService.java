@@ -3,6 +3,7 @@ package com.claimline.service;
 import com.claimline.audit.AuditEntry;
 import com.claimline.audit.AuditFile;
 import com.claimline.policy.ApprovalPolicy;
+import com.claimline.policy.ApprovalRequirements;
 import com.claimline.store.Claim;
 import com.claimline.store.ClaimStore;
 import java.util.UUID;
@@ -12,13 +13,16 @@ public final class ClaimService {
 
   private final ClaimStore claims;
   private final ApprovalPolicy approvalPolicy;
+  private final ApprovalRequirements approvalRequirements;
   private final AuditFile auditFile;
   private final Clock clock;
 
   public ClaimService(
-      ClaimStore claims, ApprovalPolicy approvalPolicy, AuditFile auditFile, Clock clock) {
+      ClaimStore claims, ApprovalPolicy approvalPolicy, ApprovalRequirements approvalRequirements,
+      AuditFile auditFile, Clock clock) {
     this.claims = claims;
     this.approvalPolicy = approvalPolicy;
+    this.approvalRequirements = approvalRequirements;
     this.auditFile = auditFile;
     this.clock = clock;
   }
