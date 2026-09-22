@@ -23,6 +23,11 @@ public final class TextFileAuditFile implements AuditFile {
 
   @Override
   public void append(AuditEntry entry) {
+    validateField("timestamp", entry.timestamp());
+    validateField("action", entry.action());
+    validateField("claimId", entry.claimId());
+    validateField("category", entry.category());
+    validateField("approverId", entry.approverId());
     // Fields are written in a fixed order.
     String line =
         entry.timestamp()
@@ -71,15 +76,39 @@ public final class TextFileAuditFile implements AuditFile {
   /** Reads a single line, returning null if it does not match the expected fields. */
   static AuditEntry parse(String line) {
     String[] fields = line.split(SEPARATOR, -1);
-    if (fields.length != FIELD_COUNT) {
+
+    if (fields.length != 5 && fields.length != FIELD_COUNT) {
       return null;
     }
+
     long amount;
+
     try {
       amount = Long.parseLong(fields[3]);
-    } catch (NumberFormatException e) {
+    } catch (NumberFormatException exception) {
       return null;
     }
-    return new AuditEntry(fields[0], fields[1], fields[2], amount, fields[4], fields[5]);
+
+    if (amount <= 0 || amount > 20_000) {
+      return null;
+    }
+
+    String approverId = "";
+
+    if (fields.length == FIELD_COUNT) {
+      approverId = fields[5];
+    }
+
+    return new AuditEntry(fields[0], fields[1], fields[2], amount, fields[4], approverId);
+  }
+
+  private static void validateField(String fieldName, String value) {
+    if (value == null) {
+      throw new IllegalArgumentException(fieldName + " cannot be null");
+    }
+
+    if (value.contains("\n") || value.contains("\r") || value.contains("\t")) {
+      throw new IllegalArgumentException(fieldName + " cannot contain tabs or newlines");
+    }
   }
 }

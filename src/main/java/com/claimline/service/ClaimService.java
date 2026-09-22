@@ -40,6 +40,11 @@ public final class ClaimService {
     if (request.category() == null || request.category().isBlank()) {
       throw new IllegalArgumentException("category is required");
     }
+    if (request.category().contains("\n")
+        || request.category().contains("\r")
+        || request.category().contains("\t")) {
+      throw new IllegalArgumentException("category cannot contain tabs or newlines");
+    }
     if (request.amount() <= 0) {
       throw new IllegalArgumentException("amount must be positive");
     }
