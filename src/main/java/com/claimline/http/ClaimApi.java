@@ -99,7 +99,9 @@ public final class ClaimApi {
         claim.amount(),
         claim.category(),
         claim.status(),
-        claim.approvedBy());
+        claim.approvedBy(),
+        claim.approvalsRequired(),
+        claim.approvals());
   }
 
   private HttpHandler handle(ThrowingHandler handler) {

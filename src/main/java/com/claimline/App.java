@@ -28,11 +28,10 @@ public final class App {
     seed.seedInto(claims);
     AuditFile auditFile = new TextFileAuditFile(config.auditFile());
 
-    ApprovalRequirements requirements =
-              ApprovalRequirements.fromJson(config.auditFile());
+    ApprovalRequirements requirements = ApprovalRequirements.fromJson(config.financeThresholds());
 
-
-      ClaimService claimService = new ClaimService(claims, approvalPolicy, requirements, auditFile, Clock.system());
+    ClaimService claimService =
+        new ClaimService(claims, approvalPolicy, requirements, auditFile, Clock.system());
     ReportService reportService = new ReportService(auditFile);
 
     HttpServer server = HttpServer.create(new InetSocketAddress(config.port()), 0);

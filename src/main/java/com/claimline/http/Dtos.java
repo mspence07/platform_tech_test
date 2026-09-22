@@ -1,5 +1,7 @@
 package com.claimline.http;
 
+import com.claimline.store.Approval;
+import java.util.List;
 import java.util.Map;
 
 /** Request and response bodies exchanged over HTTP. */
@@ -17,7 +19,9 @@ final class Dtos {
       long amount,
       String category,
       String status,
-      String approvedBy) {}
+      String approvedBy,
+      int approvalsRequired,
+      List<Approval> approvals) {}
 
   record ReportResponse(String month, Map<String, Long> totalsByCategory, long total) {}
 }

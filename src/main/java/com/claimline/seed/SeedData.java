@@ -48,7 +48,9 @@ public final class SeedData {
               claim.amount,
               claim.category,
               claim.status,
-              claim.approvedBy));
+              claim.approvedBy,
+              1,
+              List.of()));
     }
   }
 

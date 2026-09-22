@@ -73,6 +73,31 @@ class MonthlyReportTest {
     assertEquals(Map.of("meals", 99L), report.totalsByCategory());
   }
 
+  @Test
+  void testReportsMultiApprovalClaimOnlyWhenFullyApproved() {
+    Path auditFile = tempDir.resolve("audit-log.txt");
+
+    ClaimService claims = TestServices.claimService(auditFile);
+
+    Claim claim = claims.submit(TestServices.claimFor(1_289, "equipment"));
+
+    claims.approve(claim.id(), "bharat");
+
+    MonthlyReport partialReport =
+        TestServices.reportService(auditFile).monthly(new ReportMonth("2026-07"));
+
+    assertEquals(0, partialReport.total());
+    assertEquals(Map.of(), partialReport.totalsByCategory());
+
+    claims.approve(claim.id(), "chen");
+
+    MonthlyReport completedReport =
+        TestServices.reportService(auditFile).monthly(new ReportMonth("2026-07"));
+
+    assertEquals(1_289, completedReport.total());
+    assertEquals(Map.of("equipment", 1_289L), completedReport.totalsByCategory());
+  }
+
   private Path writeEntriesAlreadyRecorded() throws IOException {
     Path file = tempDir.resolve("audit-log.txt");
     Files.writeString(file, ENTRIES_ALREADY_RECORDED, StandardCharsets.UTF_8);

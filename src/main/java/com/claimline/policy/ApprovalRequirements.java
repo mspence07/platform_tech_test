@@ -3,7 +3,6 @@ package com.claimline.policy;
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
 import com.google.gson.annotations.SerializedName;
-
 import java.io.IOException;
 import java.io.Reader;
 import java.io.UncheckedIOException;
@@ -15,52 +14,44 @@ import java.util.List;
 
 public final class ApprovalRequirements {
 
-    private static final Gson GSON = new Gson();
+  private static final Gson GSON = new Gson();
 
-    @SerializedName("approvalThresholds")
-    private final List<Threshold> thresholds;
+  @SerializedName("approvalThresholds")
+  private final List<Threshold> thresholds;
 
-    public ApprovalRequirements(final List<Threshold> thresholds) {
-        this.thresholds = new ArrayList<>(thresholds);
+  public ApprovalRequirements(final List<Threshold> thresholds) {
+    this.thresholds = new ArrayList<>(thresholds);
+  }
+
+  public int approvalsRequiredFor(long amount) {
+    Threshold bestMatch = null;
+
+    for (Threshold threshold : thresholds) {
+      boolean amountMatches = amount >= threshold.minimumAmount();
+      boolean isBetterMatch =
+          bestMatch == null || threshold.minimumAmount() > bestMatch.minimumAmount();
+
+      if (amountMatches && isBetterMatch) {
+        bestMatch = threshold;
+      }
     }
 
-    public int approvalsRequiredFor(long amount) {
-        Threshold bestMatch = null;
-
-        for (Threshold threshold : thresholds) {
-            boolean amountMatches = amount >= threshold.minimumAmount();
-            boolean isBetterMatch = bestMatch == null
-                    || threshold.minimumAmount() > bestMatch.minimumAmount();
-
-            if (amountMatches && isBetterMatch) {
-                bestMatch = threshold;
-            }
-        }
-
-        if (null == bestMatch) {
-            throw new IllegalStateException(
-                    "no approval threshold configured for amount " + amount);
-        }
-
-        return bestMatch.approvalsRequired();
+    if (null == bestMatch) {
+      throw new IllegalStateException("no approval threshold configured for amount " + amount);
     }
 
-    public static ApprovalRequirements fromJson(final Path jsonFile) {
-        try (Reader reader = Files.newBufferedReader(
-                jsonFile, StandardCharsets.UTF_8)) {
+    return bestMatch.approvalsRequired();
+  }
 
-            return GSON.fromJson(reader, ApprovalRequirements.class);
+  public static ApprovalRequirements fromJson(final Path jsonFile) {
+    try (Reader reader = Files.newBufferedReader(jsonFile, StandardCharsets.UTF_8)) {
 
-        } catch (IOException exception) {
-            throw new UncheckedIOException(
-                    "Unable to read the file: " + jsonFile, exception);
-        } catch (JsonParseException exception) {
-            throw new IllegalArgumentException(
-                    "Invalid JSON in file: " + jsonFile, exception);
-        }
+      return GSON.fromJson(reader, ApprovalRequirements.class);
+
+    } catch (IOException exception) {
+      throw new UncheckedIOException("Unable to read the file: " + jsonFile, exception);
+    } catch (JsonParseException exception) {
+      throw new IllegalArgumentException("Invalid JSON in file: " + jsonFile, exception);
     }
-
-
-
-
+  }
 }
