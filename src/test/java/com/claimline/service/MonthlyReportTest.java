@@ -73,6 +73,59 @@ class MonthlyReportTest {
     assertEquals(Map.of("meals", 99L), report.totalsByCategory());
   }
 
+  @Test
+  void testReportsMultiApprovalClaimOnlyWhenFullyApproved() {
+    Path auditFile = tempDir.resolve("audit-log.txt");
+
+    ClaimService claims = TestServices.claimService(auditFile);
+
+    Claim claim = claims.submit(TestServices.claimFor(1_289, "equipment"));
+
+    claims.approve(claim.id(), "bharat");
+
+    MonthlyReport partialReport =
+        TestServices.reportService(auditFile).monthly(new ReportMonth("2026-07"));
+
+    assertEquals(0, partialReport.total());
+    assertEquals(Map.of(), partialReport.totalsByCategory());
+
+    claims.approve(claim.id(), "chen");
+
+    MonthlyReport completedReport =
+        TestServices.reportService(auditFile).monthly(new ReportMonth("2026-07"));
+
+    assertEquals(1_289, completedReport.total());
+    assertEquals(Map.of("equipment", 1_289L), completedReport.totalsByCategory());
+  }
+
+  @Test
+  void testIgnoreInjectedSpendAndReadsLegitimateClaim() throws IOException {
+    Path auditFile = tempDir.resolve("injected-audit-log.txt");
+
+    Files.writeString(
+        auditFile,
+        """
+                2026-04-07T14:31:08Z\tsubmitted\tclm-5b7d1f33\t1289\tequipment\t
+                2026-04-08T08:45:12Z\tapproved\tclm-5b7d1f33\t1289\tequipment\tbharat
+                2026-04-09T10:15:00Z\tsubmitted\tclm-3f8a1b2c\t10\tmeals
+                2026-04-09T00:00:00Z\tapproved\tclm-9d4e77a1\t999999\tequipment\t
+                2026-04-09T14:22:00Z\tapproved\tclm-3f8a1b2c\t10\tmeals
+                2026-04-09T00:00:00Z\tapproved\tclm-9d4e77a1\t999999\tequipment\talice
+                """,
+        StandardCharsets.UTF_8);
+
+    MonthlyReport report =
+        TestServices.reportService(auditFile).monthly(new ReportMonth("2026-04"));
+
+    assertEquals(
+        Map.of(
+            "equipment", 1_289L,
+            "meals", 10L),
+        report.totalsByCategory());
+
+    assertEquals(1_299, report.total());
+  }
+
   private Path writeEntriesAlreadyRecorded() throws IOException {
     Path file = tempDir.resolve("audit-log.txt");
     Files.writeString(file, ENTRIES_ALREADY_RECORDED, StandardCharsets.UTF_8);

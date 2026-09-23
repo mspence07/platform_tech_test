@@ -70,7 +70,8 @@ class ClaimApiTest {
   void rejectsAnApproverOverTheirLimitWithForbidden() throws Exception {
     String id = json(post("/claims", claimBody(1_289, "equipment"))).get("id").getAsString();
 
-    assertEquals(403, post("/claims/" + id + "/approve", "{\"approverId\":\"alice\"}").statusCode());
+    assertEquals(
+        403, post("/claims/" + id + "/approve", "{\"approverId\":\"alice\"}").statusCode());
   }
 
   @Test
@@ -94,6 +95,25 @@ class ClaimApiTest {
   @Test
   void unknownRoutesAreNotFound() throws Exception {
     assertEquals(404, get("/claims/clm-1/nope").statusCode());
+  }
+
+  @Test
+  void testReadApprovalHistoryForPartiallyApprovedClaim() throws Exception {
+    String id = json(post("/claims", claimBody(1_289, "equipment"))).get("id").getAsString();
+
+    post("/claims/" + id + "/approve", "{\"approverId\":\"bharat\"}");
+
+    JsonObject fetched = json(get("/claims/" + id));
+
+    assertEquals("pending", fetched.get("status").getAsString());
+    assertEquals(2, fetched.get("approvalsRequired").getAsInt());
+    assertEquals(1, fetched.getAsJsonArray("approvals").size());
+
+    JsonObject approval = fetched.getAsJsonArray("approvals").get(0).getAsJsonObject();
+
+    assertEquals("bharat", approval.get("approverId").getAsString());
+
+    assertEquals(TestServices.NOW, approval.get("approvedAt").getAsString());
   }
 
   private static String claimBody(long amount, String category) {

@@ -27,8 +27,14 @@ public final class SeedData {
   }
 
   public static SeedData load() {
-    return new SeedData(
-        read(APPROVERS, ApproverFixture.class).approvers, read(CLAIMS, ClaimFixture.class).claims);
+
+    ApproverFixture approverFixture = read(APPROVERS, ApproverFixture.class);
+
+    ClaimFixture claimFixture = read(CLAIMS, ClaimFixture.class);
+
+    validateClaims(claimFixture.claims);
+
+    return new SeedData(approverFixture.approvers, claimFixture.claims);
   }
 
   public ApprovalPolicy toApprovalPolicy() {
@@ -48,7 +54,9 @@ public final class SeedData {
               claim.amount,
               claim.category,
               claim.status,
-              claim.approvedBy));
+              claim.approvedBy,
+              1,
+              List.of()));
     }
   }
 
@@ -84,5 +92,40 @@ public final class SeedData {
     String category;
     String status;
     String approvedBy;
+  }
+
+  private static void validateClaims(List<SeedClaim> claims) {
+    for (SeedClaim claim : claims) {
+      if (claim == null) {
+        throw new IllegalStateException("seeded claims cannot contain null");
+      }
+
+      validateField("id", claim.id);
+      validateField("submitterId", claim.submitterId);
+      validateField("category", claim.category);
+      validateField("status", claim.status);
+
+      if (claim.amount <= 0 || claim.amount > 20_000) {
+        throw new IllegalStateException("invalid amount in seeded claim " + claim.id);
+      }
+
+      if (!Claim.PENDING.equals(claim.status) && !Claim.APPROVED.equals(claim.status)) {
+        throw new IllegalStateException("invalid status in seeded claim " + claim.id);
+      }
+
+      if (Claim.APPROVED.equals(claim.status)) {
+        validateField("approvedBy", claim.approvedBy);
+      }
+    }
+  }
+
+  private static void validateField(String fieldName, String value) {
+    if (value == null) {
+      throw new IllegalArgumentException(fieldName + " cannot be null");
+    }
+
+    if (value.contains("\n") || value.contains("\r") || value.contains("\t")) {
+      throw new IllegalArgumentException(fieldName + " cannot contain tabs or newlines");
+    }
   }
 }
